@@ -1,0 +1,14 @@
+<template>
+  <div class="home">
+    {% include 'sfc--dreet-form.html.twig' %}
+    {% include 'sfc--timeline.html.twig' %}
+  </div>
+</template>
+
+<style>
+  .home {
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    height: 100vh;
+  }
+</style>

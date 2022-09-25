@@ -1,0 +1,41 @@
+<template>
+  <div class="left-sidebar">
+    <div class="left-sidebar__logo"></div>
+    <ul class="left-sidebar__links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/">Profile</a></li>
+    </ul>
+  </div>
+</template>
+
+<style>
+  .left-sidebar {
+    padding: 16px;
+  }
+  .left-sidebar__links {
+    margin: 0;
+    padding: 0;
+  }
+  .left-sidebar__links li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-bottom: 5px;
+  }
+  .left-sidebar__links a,
+  .left-sidebar__links a:hover,
+  .left-sidebar__links a:focus {
+    display: block;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 20px;
+    padding: 15px 30px;
+    color: black;
+    border-radius: 50px;
+    transition: background-color .2s;
+  }
+  .left-sidebar__links a:hover,
+  .left-sidebar__links a:focus {
+    background-color: lightgray;
+  }
+</style>

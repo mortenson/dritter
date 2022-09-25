@@ -1,0 +1,7 @@
+dritter_routes.home:
+  path: '/home'
+  defaults:
+    _controller: '\Drupal\sfc\Controller\ComponentController::build'
+    component_id: 'home'
+  requirements:
+    _user_is_logged_in: 'TRUE'

@@ -1,0 +1,10 @@
+<div id="region-before" class="container region-before">
+  {{ page.before }}
+</div>
+<main id="main-content" class="region-content">
+  {% include 'sfc--left-sidebar.html.twig' %}
+  <div class="real-content">
+    {{ page.content }}
+  </div>
+  {% include 'sfc--right-sidebar.html.twig' %}
+</main>

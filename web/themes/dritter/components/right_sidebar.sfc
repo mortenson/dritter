@@ -1,0 +1,7 @@
+<template>
+  <div class="right-sidebar">
+    <div class="right-sidebar__search-form">
+      Search
+    </div>
+  </div>
+</template>

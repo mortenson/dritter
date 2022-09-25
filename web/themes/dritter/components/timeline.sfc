@@ -1,0 +1,25 @@
+<template>
+  <div class="timeline">
+    {% for dreet in dreets %}
+      {% include 'sfc--dreet.html.twig' with {
+        'text': dreet.field_text.value,
+        'date': dreet.created.value | date("m/d/Y H:i:s"),
+        'author': dreet.uid.entity.name.value,
+      } %}
+      {{ sfc_cache(dreet) }}
+    {% endfor %}
+    {{ sfc_cache('node_list') }}
+  </div>
+</template>
+
+<?php
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+
+$prepareContext = function (array &$context, EntityTypeManagerInterface $etm) {
+  $query = $etm->getStorage('node')->getQuery();
+  $query->condition('type', 'dreet');
+  $query->sort('created', 'desc');
+  $query->range(0, 50);
+  $nids = $query->execute();
+  $context['dreets'] = $etm->getStorage('node')->loadMultiple($nids);
+};

@@ -1,0 +1,6 @@
+name: Dritter Routes
+type: module
+description: 'Provide routes for Dritter.'
+core_version_requirement: ^9
+dependencies:
+  - sfc:sfc

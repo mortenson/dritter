@@ -1,0 +1,26 @@
+<template>
+  <div class="dreet">
+    <div class="dreet__byline">
+      <div class="dreet__byline__name">{{ author }}</div>
+      <div class="dreet__byline__date">{{ date }}</div>
+    </div>
+    <div class="dreet__text">
+      {{ text }}
+    </div>
+  </div>
+</template>
+
+<style>
+  .dreet {
+    padding: 20px 16px;
+    border-top: 1px solid lightgray;
+  }
+  .dreet__byline {
+    display: flex;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .dreet__byline__name {
+    margin-right: 10px;
+  }
+</style>

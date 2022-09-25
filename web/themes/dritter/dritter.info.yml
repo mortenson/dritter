@@ -1,0 +1,11 @@
+name: Dritter
+type: theme
+base theme: stable
+description: 'A theme for Dritter.'
+core_version_requirement: '^9'
+libraries:
+  - core/normalize
+  - dritter/main
+regions:
+  before: Before
+  content: Content
