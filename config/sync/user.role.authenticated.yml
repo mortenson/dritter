@@ -1,0 +1,19 @@
+uuid: ea93b228-042f-4b53-804c-d680e294228b
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.dreet
+  module:
+    - node
+    - system
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'create dreet content'
+  - 'delete own dreet content'

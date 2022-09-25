@@ -1,0 +1,11 @@
+uuid: 509a1247-ed88-48a4-91f3-e27232054f18
+langcode: en
+status: true
+dependencies: {  }
+name: Dreet
+type: dreet
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true
