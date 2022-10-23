@@ -1,12 +1,18 @@
 <template>
   <div class="dreet">
     <div class="dreet__byline">
-      <div class="dreet__byline__name">{{ author }}</div>
+      <div class="dreet__byline__name">{{ author_name }}</div>
+      <div class="dreet__byline__username">
+        <a href="{{ url('dritter_routes.profile_slug', {'username': author_username}) }}">
+          {{ author_username }}
+        </a>
+      </div>
       <div class="dreet__byline__date">{{ date }}</div>
     </div>
     <div class="dreet__text">
       {{ text }}
     </div>
+    {% include 'sfc--like-button' with {'dreet_id': dreet_id} %}
   </div>
 </template>
 

@@ -4,7 +4,9 @@
       {% include 'sfc--dreet.html.twig' with {
         'text': dreet.field_text.value,
         'date': dreet.created.value | date("m/d/Y H:i:s"),
-        'author': dreet.uid.entity.name.value,
+        'author_name': dreet.uid.entity.name.value | capitalize,
+        'author_username': dreet.uid.entity.name.value,
+        'dreet_id': dreet.id,
       } %}
       {{ sfc_cache(dreet) }}
     {% endfor %}
@@ -20,6 +22,9 @@ $prepareContext = function (array &$context, EntityTypeManagerInterface $etm) {
   $query->condition('type', 'dreet');
   $query->sort('created', 'desc');
   $query->range(0, 50);
+  if (!empty($context['uid'])) {
+    $query->condition('uid', $context['uid']);
+  }
   $nids = $query->execute();
   $context['dreets'] = $etm->getStorage('node')->loadMultiple($nids);
 };

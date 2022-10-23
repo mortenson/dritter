@@ -1,0 +1,91 @@
+<template>
+  <div class="like-button {% if is_liked %} is-liked {% endif %}" {{ sfc_attributes }}>
+    <a href="{{ sfc_actions.like }}&dreet_id={{ dreet_id }}" class="use-ajax">
+      Like
+    </a>
+  </div>
+  {{ attach_library('core/drupal.ajax') }}
+  {{ sfc_cache(current_user) }}
+</template>
+
+<style>
+  .like-button {
+    padding: 10px;
+  }
+  .like-button a {
+    display: block;
+  }
+  .like-button.is-liked {
+    background-color: red;
+  }
+</style>
+
+<?php
+
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\node\Entity\Node;
+use Drupal\user\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
+$prepareContext = function(array &$context, AccountProxyInterface $current_user) {
+  $is_liked = FALSE;
+
+  $dreet = Node::load($context['dreet_id']);
+  $user = User::load($current_user->id());
+  /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $likes */
+  $likes = $user->field_likes;
+
+  foreach ($likes->getValue() as $k => $v) {
+    $current_id = reset($v);
+    if ($dreet->id() === $current_id) {
+      $is_liked = TRUE;
+      break;
+    }
+  }
+
+  $context['is_liked'] = $is_liked;
+  $context['current_user'] = $user;
+};
+
+$actions['like'] = function(Request $request, AccountProxyInterface $current_user) {
+  $unique_id = (string) $request->query->get('sfc_unique_id', '');
+
+  $dreet_id = $request->query->get('dreet_id');
+  if (!isset($dreet_id) || $current_user->isAnonymous()) {
+    throw new AccessDeniedHttpException();
+  }
+
+  $dreet = Node::load($dreet_id);
+  $user = User::load($current_user->id());
+  if (!$dreet || !$user) {
+    throw new AccessDeniedHttpException();
+  }
+
+  /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $likes */
+  $likes = $user->field_likes;
+  $unset_index = -1;
+  foreach ($likes->getValue() as $k => $v) {
+    $current_id = reset($v);
+    if ($dreet->id() === $current_id) {
+      $unset_index = $k;
+      break;
+    }
+  }
+  $method = '';
+  if ($unset_index !== -1) {
+    $likes->removeItem($unset_index);
+    $method = 'removeClass';
+  } else {
+    $likes->appendItem(['target_id' => $dreet->id()]);
+    $method = 'addClass';
+  }
+  $user->save();
+
+  $response = new AjaxResponse();
+  $command = new InvokeCommand('[data-sfc-unique-id="' . $unique_id . '"]', $method, ['is-liked']);
+  $response->addCommand($command);
+  return $response;
+};

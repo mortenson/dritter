@@ -5,3 +5,19 @@ dritter_routes.home:
     component_id: 'home'
   requirements:
     _user_is_logged_in: 'TRUE'
+
+dritter_routes.profile:
+  path: '/profile'
+  defaults:
+    _controller: '\Drupal\sfc\Controller\ComponentController::build'
+    component_id: 'profile'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+dritter_routes.profile_slug:
+  path: '/profile/{username}'
+  defaults:
+    _controller: '\Drupal\sfc\Controller\ComponentController::build'
+    component_id: 'profile'
+  requirements:
+    _user_is_logged_in: 'TRUE'

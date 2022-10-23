@@ -1,0 +1,50 @@
+<template>
+  <div class="profile">
+    {% if error %}
+      <div class="profile__error">
+        {{ error }}
+      </div>
+    {% else %}
+      <div class="profile__header">
+        <div class="profile__breadcrumb">
+          <a class="profile__breadcrumb__back">Back</a>
+          <div class="profile__stats">
+            <div class="profile__stats__name">{{ user.name.value | capitalize }}</div>
+            <div class="profile__stats__dreet-count">1,000 Dreets</div>
+          </div>
+        </div>
+        <div class="profile__header-image">
+          <img src="https://pbs.twimg.com/profile_banners/4115283553/1554155082/600x200" />
+        </div>
+        <div class="profile__image">
+          <img src="https://pbs.twimg.com/profile_images/1217511483971526657/xwrz0UGY_400x400.jpg" />
+        </div>
+        <div class="profile__name">{{ user.name.value | capitalize }}</div>
+        <div class="profile__username">{{ user.name.value }}</div>
+      </div>
+      <div class="profile__timeline-header">Tweets</div>
+      {% include 'sfc--timeline.html.twig' with {'uid': user.id} %}
+    {% endif %}
+  </div>
+</template>
+
+<?php
+
+use Drupal\user\Entity\User;
+
+$prepareContext = function (&$context) {
+  if (isset($context['username'])) {
+    $results = \Drupal::entityQuery('user')
+      ->condition('name', $context['username'])
+      ->execute();
+    if (!empty($results)) {
+      $uid = reset($results);
+      $context['user'] = User::load($uid);
+    } else {
+      $context['error'] = 'User not found';
+    }
+  }
+  if (!isset($context['user'])) {
+    $context['user'] = \Drupal::currentUser();
+  }
+};
