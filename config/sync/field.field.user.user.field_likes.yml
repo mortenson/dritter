@@ -1,0 +1,30 @@
+uuid: da243715-61ff-4604-ada0-ec8506f8b92c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_likes
+    - node.type.dreet
+  module:
+    - user
+id: user.user.field_likes
+field_name: field_likes
+entity_type: user
+bundle: user
+label: Likes
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      dreet: dreet
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
